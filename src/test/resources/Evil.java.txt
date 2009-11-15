@@ -1,0 +1,50 @@
+//@BEGIN_VERSION 1
+public class QueryOverlapTest extends TestCase {
+    private QueryOverlap tested;
+
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+
+        tested = new QueryOverlap(new DummyContigFilter());
+        tested.addContig(new Contig("aquery", "asubject", 1, 100, 0));
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        super.tearDown();
+
+        tested = null;
+    }
+
+    public void testAddContig() throws Exception {
+        tested.addContig(new Contig("aquery", "bsubject", 1, 50, 0));
+
+        Set<Overlap> overlaps = tested.getOverlaps();
+        assertEquals(1, overlaps.size());
+        Overlap overlap = overlaps.iterator().next();
+        assertEquals(1, overlap.getStart());
+        assertEquals(50, overlap.getEnd());
+    //@BEGIN_VERSION 3
+        assertEquals(50, tested.getOverlapTotal());
+    //@END_VERSION 4
+    }
+
+    //@BEGIN_VERSION 2
+    public void testAddContigWithOverlapBefore() throws Exception {
+        tested = new QueryOverlap(new DummyContigFilter());
+        tested.addContig(new Contig("aquery", "asubject", 100, 150, 0));
+
+        tested.addContig(new Contig("aquery", "bsubject", 50, 150, 0));
+
+        Set<Overlap> overlaps = tested.getOverlaps();
+        assertEquals(1, overlaps.size());
+        Overlap overlap = overlaps.iterator().next();
+        assertEquals(100, overlap.getStart());
+        assertEquals(150, overlap.getEnd());
+
+        assertEquals(51, tested.getOverlapTotal());
+    }
+    //@END_VERSION 2
+    ...
+}
