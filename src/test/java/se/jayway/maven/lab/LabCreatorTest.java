@@ -12,6 +12,7 @@ import java.io.StringWriter;
 import org.junit.Test;
 
 public class LabCreatorTest {
+
 	@Test
 	public void correctContentsOfVersion() throws IOException {
 		String name = "VersionTest.txt";

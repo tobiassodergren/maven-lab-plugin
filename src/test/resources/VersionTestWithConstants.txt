@@ -1,0 +1,12 @@
+//@BEGIN_VERSION tre
+---
+     //@END_VERSION tre
+//@BEGIN_VERSION ETT
+VERSION1
+            #@END_VERSION ETT           
+//@BEGIN_VERSION TVÅ   the spex version
+VERSION2
+----------------//@END_VERSION TVÅ	tjolahopp
+//@BEGIN_VERSION tre              
+---
+//@END_VERSION tre

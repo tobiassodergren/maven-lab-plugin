@@ -56,9 +56,9 @@ public class LabCreator {
 				String parsed = line.trim();
 				if (parsed.contains(BEGIN)) {
 					versions.push(currentVersion);
-					currentVersion = parseInt(parsed.substring(parsed.indexOf(BEGIN)+BEGIN.length()).trim());
+					currentVersion = parseVersion(parsed);
 				} else if (parsed.contains(END)) {
-					int endVersion = parseInt(parsed.substring(parsed.indexOf(END)+END.length()).trim());
+					int endVersion = parseVersion(parsed);
 					if (currentVersion != endVersion) {
 						throw new IllegalArgumentException("Incorrect end-tag! expected " + currentVersion + " but was " + endVersion + ": " + name);
 					}
@@ -70,6 +70,14 @@ public class LabCreator {
 			return contents;
 		} finally {
 			IOUtil.close(reader);
+		}
+	}
+
+	protected int parseVersion(String string) {
+		if (string.contains(BEGIN)) {
+			return parseInt(string.substring(string.indexOf(BEGIN)+BEGIN.length()).trim());
+		} else {
+			return parseInt(string.substring(string.indexOf(END)+END.length()).trim());
 		}
 	}
 
