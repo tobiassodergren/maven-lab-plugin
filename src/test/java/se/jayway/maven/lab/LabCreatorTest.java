@@ -24,6 +24,18 @@ public class LabCreatorTest {
 		assertEquals("---\nVERSION1\nVERSION2\n---\n", contents3);
 	}
 
+	@Test
+	public void correctContentsOfVersionWithConstans() throws IOException {
+		String name = "VersionTestWithConstants.txt";
+		VersionedContents versionedContents = new LabCreator("noll", "ETT", "TVÅ", "tre").labify(new InputStreamReader(LabCreatorTest.class.getClassLoader().getResourceAsStream(name)), name);
+		String contents1 = getContents(versionedContents, 1);
+		assertEquals("VERSION1\n", contents1);
+		String contents2 = getContents(versionedContents, 2);
+		assertEquals("VERSION1\nVERSION2\n", contents2);
+		String contents3 = getContents(versionedContents, 3);
+		assertEquals("---\nVERSION1\nVERSION2\n---\n", contents3);
+	}
+
 	private String getContents(VersionedContents versionedContents, int step) {
 		StringWriter writer = new StringWriter();
 		versionedContents.writeVersion(writer, step);

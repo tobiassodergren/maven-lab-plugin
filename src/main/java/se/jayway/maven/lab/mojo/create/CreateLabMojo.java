@@ -15,7 +15,7 @@ import se.jayway.maven.lab.VersionedContents;
  * @goal create
  * @author Jan Kronquist
  */
-public class CreateLabMojo extends AbstractProjectFilesMojo {
+public class CreateLabMojo extends AbstractCreateLabMojo {
 
 	/**
      * The highest step number used in any of the files.
@@ -28,12 +28,11 @@ public class CreateLabMojo extends AbstractProjectFilesMojo {
 	private FileIndex fileIndex = new FileIndex();
 
 	@Override
-	protected void init() {
+	protected void init(LabCreator labCreator) {
 	}
 	
 	@Override
-	protected void process(File file) throws IOException {
-		VersionedContents versionedContents = new LabCreator().labify(file);
+	protected void process(File file, VersionedContents versionedContents) throws IOException {
 		boolean addedToIndex = false;
 		int maxStepToUse = (maxStep != 0) ? maxStep : versionedContents.getMaxVersion();
 		maxStepFound = Math.max(maxStepFound, maxStepToUse);

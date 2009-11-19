@@ -50,7 +50,7 @@ public abstract class AbstractProjectFilesMojo extends AbstractMojo {
      *
      * @parameter
      */
-    private String[] includes = new String[] {"src/test/**/*"};
+    private String[] includes = new String[] {"src/**/*"};
 
     /**
      * List of files to exclude. Specified as fileset patterns.

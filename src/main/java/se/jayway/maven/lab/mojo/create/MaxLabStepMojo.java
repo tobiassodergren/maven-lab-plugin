@@ -12,7 +12,7 @@ import se.jayway.maven.lab.VersionedContents;
  * @goal findMax
  * @author Jan Kronquist
  */
-public class MaxLabStepMojo extends AbstractProjectFilesMojo {
+public class MaxLabStepMojo extends AbstractCreateLabMojo {
 	
 	private int maxVersion = 0;
 
@@ -22,12 +22,11 @@ public class MaxLabStepMojo extends AbstractProjectFilesMojo {
 	}
 
 	@Override
-	protected void init() {
+	protected void init(LabCreator labCreator) {
 	}
 
 	@Override
-	protected void process(File file) throws IOException {
-		VersionedContents versionedContents = new LabCreator().labify(file);
+	protected void process(File file, VersionedContents versionedContents) {
 		maxVersion = Math.max(maxVersion, versionedContents.getMaxVersion());
 	}
 
