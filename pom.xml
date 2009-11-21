@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>se.jayway.maven</groupId>
+	<groupId>se.jayway.maven.plugins</groupId>
 	<artifactId>maven-lab-plugin</artifactId>
 	<packaging>maven-plugin</packaging>
 	<version>1.0-SNAPSHOT</version>
@@ -30,18 +30,11 @@
 		</developer>
 	</developers>
 	<distributionManagement>
-		<repository>
-			<uniqueVersion>false</uniqueVersion>
-			<id>local-repo</id>
-			<name>Local file Repository</name>
-			<url>file://${basedir}/target/repo</url>
-			<layout>default</layout>
-		</repository>
 		<snapshotRepository>
-			<uniqueVersion>false</uniqueVersion>
-			<id>local-snapshot-repo</id>
-			<name>Local file Snapshot Repository</name>
-			<url>file://${basedir}/target/repo</url>
+			<uniqueVersion>true</uniqueVersion>
+			<id>jayway-snapshot-repo</id>
+			<name>Jayway Public Snapshot Repository</name>
+			<url>http://ec2-79-125-38-163.eu-west-1.compute.amazonaws.com/nexus/content/repositories/snapshots/</url>
 			<layout>default</layout>
 		</snapshotRepository>
 		<site>
