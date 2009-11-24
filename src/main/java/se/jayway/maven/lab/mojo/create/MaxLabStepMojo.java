@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import se.jayway.maven.lab.LabCreator;
+import se.jayway.maven.lab.LabRunner;
 import se.jayway.maven.lab.VersionedContents;
 
 /**
@@ -18,7 +19,7 @@ public class MaxLabStepMojo extends AbstractCreateLabMojo {
 
 	@Override
 	protected String getOutputDirectoryName() {
-		return "chunker";
+		return LabRunner.LAB_DIRECTORY;
 	}
 
 	@Override

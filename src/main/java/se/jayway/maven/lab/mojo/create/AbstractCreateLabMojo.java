@@ -23,7 +23,6 @@ public abstract class AbstractCreateLabMojo extends AbstractProjectFilesMojo {
 
 	@Override
 	protected final void init() {
-		System.out.println(labStepContantFile);
 		if (labStepContantFile.exists()) {
 			try {
 				labCreator = new LabCreator(FileUtil.loadFile(labStepContantFile));

@@ -7,6 +7,7 @@ import se.jayway.maven.lab.FileIndex;
 import se.jayway.maven.lab.FileUtil;
 import se.jayway.maven.lab.LabCreator;
 import se.jayway.maven.lab.LabProperties;
+import se.jayway.maven.lab.LabRunner;
 import se.jayway.maven.lab.VersionedContents;
 
 /**
@@ -33,6 +34,9 @@ public class CreateLabMojo extends AbstractCreateLabMojo {
 	
 	@Override
 	protected void process(File file, VersionedContents versionedContents) throws IOException {
+		if (versionedContents.getMaxVersion() == 0) {
+			return;
+		}
 		boolean addedToIndex = false;
 		int maxStepToUse = (maxStep != 0) ? maxStep : versionedContents.getMaxVersion();
 		maxStepFound = Math.max(maxStepFound, maxStepToUse);
@@ -52,7 +56,7 @@ public class CreateLabMojo extends AbstractCreateLabMojo {
 
 	@Override
 	protected String getOutputDirectoryName() {
-		return "chunker";
+		return LabRunner.LAB_DIRECTORY;
 	}
 
 	@Override

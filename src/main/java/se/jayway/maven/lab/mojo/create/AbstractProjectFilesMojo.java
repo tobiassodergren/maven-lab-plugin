@@ -84,7 +84,6 @@ public abstract class AbstractProjectFilesMojo extends AbstractMojo {
 				throw new MojoExecutionException("Failed to delete outputdirectory", e);
 			}
 		}
-		getLog().info("output: " + outputDirectory);
 		outputDirectory.mkdirs();
 		
 		DirectoryScanner scanner = new DirectoryScanner();

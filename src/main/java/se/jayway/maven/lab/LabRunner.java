@@ -13,6 +13,8 @@ import org.codehaus.plexus.util.FileUtils;
  */
 public class LabRunner {
 
+	public static final String LAB_DIRECTORY = "lab";	// TODO: move elsewhere
+	
 	private static final String CURRENT_STEP_PREFIX = "Current step ";
 	private String labCurrentStepFileName;
 	private final File labStorageDirectory;
@@ -23,7 +25,7 @@ public class LabRunner {
 		this.targetDirectory = targetDirectory;
 		this.labCurrentStepFileName = new File(buildDirectory,
 				"labCurrentStep.txt").getAbsolutePath();
-		this.labStorageDirectory = new File(buildDirectory, "chunker");
+		this.labStorageDirectory = new File(buildDirectory, LAB_DIRECTORY);
 		labProperties = LabProperties.load(labStorageDirectory);
 	}
 
