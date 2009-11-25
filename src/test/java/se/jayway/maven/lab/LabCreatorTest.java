@@ -8,33 +8,34 @@ import static org.junit.Assert.fail;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
+import java.nio.charset.Charset;
 
 import org.junit.Test;
 
 public class LabCreatorTest {
+	public static String newline = System.getProperty("line.separator");
 
 	@Test
 	public void correctContentsOfVersion() throws IOException {
 		String name = "VersionTest.txt";
 		VersionedContents versionedContents = new LabCreator().labify(new InputStreamReader(LabCreatorTest.class.getClassLoader().getResourceAsStream(name)), name);
-		String contents1 = getContents(versionedContents, 1);
-		assertEquals("VERSION1\n", contents1);
-		String contents2 = getContents(versionedContents, 2);
-		assertEquals("VERSION1\nVERSION2\n", contents2);
-		String contents3 = getContents(versionedContents, 3);
-		assertEquals("---\nVERSION1\nVERSION2\n---\n", contents3);
+		checkCorrectContetsOfVersion(versionedContents);
 	}
 
 	@Test
 	public void correctContentsOfVersionWithConstans() throws IOException {
 		String name = "VersionTestWithConstants.txt";
 		VersionedContents versionedContents = new LabCreator("noll", "ETT", "TVÅ", "tre").labify(new InputStreamReader(LabCreatorTest.class.getClassLoader().getResourceAsStream(name)), name);
+		checkCorrectContetsOfVersion(versionedContents);
+	}
+
+	private void checkCorrectContetsOfVersion(VersionedContents versionedContents) {
 		String contents1 = getContents(versionedContents, 1);
-		assertEquals("VERSION1\n", contents1);
+		assertEquals("VERSION1" + newline, contents1);
 		String contents2 = getContents(versionedContents, 2);
-		assertEquals("VERSION1\nVERSION2\n", contents2);
+		assertEquals("VERSION1" + newline + "VERSION2" + newline, contents2);
 		String contents3 = getContents(versionedContents, 3);
-		assertEquals("---\nVERSION1\nVERSION2\n---\n", contents3);
+		assertEquals("---" + newline + "VERSION1" + newline + "VERSION2" + newline + "---" + newline, contents3);
 	}
 
 	private String getContents(VersionedContents versionedContents, int step) {
