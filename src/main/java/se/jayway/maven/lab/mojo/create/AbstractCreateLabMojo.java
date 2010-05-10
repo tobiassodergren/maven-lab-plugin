@@ -14,18 +14,18 @@ public abstract class AbstractCreateLabMojo extends AbstractProjectFilesMojo {
 
 	/**
 	 * Root for the project.
-	 * @parameter expression="${basedir}/labStepContants.properties"
+	 * @parameter expression="${basedir}/labStepConstants.properties"
 	 * @required
 	 */
-	private File labStepContantFile;
+	private File labStepConstantsFile;
 
 	private LabCreator labCreator;
 
 	@Override
 	protected final void init() {
-		if (labStepContantFile.exists()) {
+		if (labStepConstantsFile.exists()) {
 			try {
-				labCreator = new LabCreator(FileUtil.loadFile(labStepContantFile));
+				labCreator = new LabCreator(FileUtil.loadFile(labStepConstantsFile));
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			}
