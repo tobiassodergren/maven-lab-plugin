@@ -34,7 +34,7 @@
 			<uniqueVersion>true</uniqueVersion>
 			<id>jayway-snapshot-repo</id>
 			<name>Jayway Public Snapshot Repository</name>
-			<url>http://ec2-79-125-38-163.eu-west-1.compute.amazonaws.com/nexus/content/repositories/snapshots/</url>
+			<url>http://waybuild.gotdns.com/nexus/content/repositories/snapshots/</url>
 			<layout>default</layout>
 		</snapshotRepository>
 		<site>
