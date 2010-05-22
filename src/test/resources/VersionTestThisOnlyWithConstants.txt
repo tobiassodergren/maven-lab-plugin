@@ -1,0 +1,28 @@
+html
+    head
+        title
+        <!--@BEGIN_VERSION Two -->
+        Two to keep
+        <!--@END_VERSION Two -->
+        some initial stuff ie Zero
+        //@BEGIN_VERSION One
+        One to keep
+        //@END_VERSION One
+        //@BEGIN_VERSION Two
+        Two to keep
+        //@END_VERSION Two
+        some more initial stuff
+    head
+    body
+    //@BEGIN_VERSION_ONLY Zero
+    Zero
+    //@END_VERSION_ONLY Zero
+    //@BEGIN_VERSION_ONLY One
+    One
+    //@END_VERSION_ONLY One
+    //@BEGIN_VERSION_ONLY Two
+    Two
+    //@END_VERSION_ONLY Two
+    	 div
+    body
+html

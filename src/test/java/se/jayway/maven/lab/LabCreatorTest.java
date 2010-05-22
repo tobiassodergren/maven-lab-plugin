@@ -102,10 +102,63 @@ public class LabCreatorTest {
 
 	private void checkCorrectContetsOfVersionThisOnly(VersionedContents versionedContents) {
 		String contents1 = getContents(versionedContents, 1);
-		assertEquals("VERSION1" + newline, contents1);
+		assertEquals("Checking version 1: ", "VERSION1" + newline + "VERSION1 that should be left" + newline, contents1);
 		String contents2 = getContents(versionedContents, 2);
-		assertEquals("VERSION2" + newline, contents2);
+		assertEquals("Checking version 2: ", "VERSION2" + newline + "VERSION1 that should be left" + newline, contents2);
 		String contents3 = getContents(versionedContents, 3);
-		assertEquals("---" + newline + "VERSION2" + newline + "---" + newline, contents3);
+		assertEquals("Checking version 3: ", "---" + newline + "VERSION2" + newline + "---" + newline + "VERSION1 that should be left" + newline, contents3);
+	}
+
+	@Test
+	public void correctContentsOfAnotherVersionThisOnly() throws IOException {
+		String name = "VersionTestThisOnlyWithConstants.txt";
+		VersionedContents versionedContents = new LabCreator("Zero", "One", "Two").labify(new InputStreamReader(LabCreatorTest.class.getClassLoader().getResourceAsStream(name)), name);
+		checkCorrectContetsOfVersionThisOnlyWithConstants(versionedContents);
+	}
+
+	private void checkCorrectContetsOfVersionThisOnlyWithConstants(VersionedContents versionedContents) {
+		String contents0 = getContents(versionedContents, 0);
+		assertEquals("Checking version 0: ", 
+			"html" + newline +
+			"    head" + newline +
+			"        title" + newline +
+			"        some initial stuff ie Zero" + newline +
+			"        some more initial stuff" + newline +
+			"    head" + newline +
+			"    body" + newline +
+			"    Zero" + newline +
+			"    	 div" + newline +
+			"    body" + newline +
+			"html" + newline, contents0);
+		String contents1 = getContents(versionedContents, 1);
+		assertEquals("Checking version 1: ", 
+			"html" + newline +
+			"    head" + newline +
+			"        title" + newline +
+			"        some initial stuff ie Zero" + newline +
+			"        One to keep" + newline +
+			"        some more initial stuff" + newline +
+			"    head" + newline +
+			"    body" + newline +
+			"    One" + newline +
+			"    	 div" + newline +
+			"    body" + newline +
+			"html" + newline, contents1);
+		String contents2 = getContents(versionedContents, 2);
+		assertEquals("Checking version 2: ", 
+			"html" + newline +
+			"    head" + newline +
+			"        title" + newline +
+			"        Two to keep" + newline +
+			"        some initial stuff ie Zero" + newline +
+			"        One to keep" + newline +
+			"        Two to keep" + newline +
+			"        some more initial stuff" + newline +
+			"    head" + newline +
+			"    body" + newline +
+			"    Two" + newline +
+			"    	 div" + newline +
+			"    body" + newline +
+			"html" + newline, contents2);
 	}
 }

@@ -10,3 +10,6 @@ VERSION2
 //@BEGIN_VERSION 3              
 ---
 //@END_VERSION 3
+@BEGIN_VERSION 1
+VERSION1 that should be left
+@END_VERSION 1           

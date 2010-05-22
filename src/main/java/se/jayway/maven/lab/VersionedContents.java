@@ -35,6 +35,11 @@ public class VersionedContents {
 			this.version = version;
 		}
 	
+		@Override
+		public String toString() {
+			return "Row [contents=" + contents + ", version=" + version + "]";
+		}
+
 		String contents;
 	
 		Version version;

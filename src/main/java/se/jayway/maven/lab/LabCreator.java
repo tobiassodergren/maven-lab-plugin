@@ -70,16 +70,15 @@ public class LabCreator {
 		BufferedReader reader = new BufferedReader(r);
 		try {
 			VersionedContents contents = new VersionedContents();
-			Version currentVersion = new Version(0);
+			Version currentVersion = Version.ZERO;
 			Stack<Version> versions = new Stack<Version>();
 			while (true) {
 				String line = reader.readLine();
 				if (line == null)
 					break;
 				String parsed = line.trim();
-				// TODO here is the logic for keeping or throwing away contents
 				if (parsed.contains(BEGIN_VERSION_ONLY)) {
-					versions.push(new Version(currentVersion.getVersionNumber(), ONLY_IN_THIS_VERSION));
+					versions.push(currentVersion);
 					currentVersion = parseVersion(parsed);
 				}
 				else if (parsed.contains(END_VERSION_ONLY)) {
