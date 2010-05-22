@@ -1,0 +1,12 @@
+//@BEGIN_VERSION 3
+---
+     //@END_VERSION 3
+//@BEGIN_VERSION_ONLY 1
+VERSION1
+            #@END_VERSION_ONLY 1           
+//@BEGIN_VERSION 2   the spex version
+VERSION2
+----------------//@END_VERSION 2	tjolahopp
+//@BEGIN_VERSION 3              
+---
+//@END_VERSION 3

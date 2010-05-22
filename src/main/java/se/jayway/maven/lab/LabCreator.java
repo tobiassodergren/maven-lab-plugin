@@ -33,12 +33,19 @@ import org.codehaus.plexus.util.IOUtil;
  * @author Jan Kronquist
  */
 public class LabCreator {
-	
-	private static final String BEGIN = "@BEGIN_VERSION";
-	private static final String END = "@END_VERSION";
-	
+
+	private static final boolean ONLY_IN_THIS_VERSION = true;
+
+	private static final String BEGIN_VERSION_ONLY = "@BEGIN_VERSION_ONLY";
+
+	private static final String END_VERSION_ONLY = "@END_VERSION_ONLY";
+
+	private static final String BEGIN_VERSION = "@BEGIN_VERSION";
+
+	private static final String END_VERSION = "@END_VERSION";
+
 	private Map<String, Integer> constants;
-	
+
 	public LabCreator() {
 		constants = new HashMap<String, Integer>();
 	}
@@ -49,7 +56,7 @@ public class LabCreator {
 
 	public LabCreator(List<String> constants) {
 		int index = 0;
-		this.constants = new HashMap<String, Integer>(); 
+		this.constants = new HashMap<String, Integer>();
 		for (String constant : constants) {
 			this.constants.put(constant, index++);
 		}
@@ -63,36 +70,67 @@ public class LabCreator {
 		BufferedReader reader = new BufferedReader(r);
 		try {
 			VersionedContents contents = new VersionedContents();
-			int currentVersion = 0;
-			Stack<Integer> versions = new Stack<Integer>();
+			Version currentVersion = new Version(0);
+			Stack<Version> versions = new Stack<Version>();
 			while (true) {
 				String line = reader.readLine();
-				if (line == null) break;
+				if (line == null)
+					break;
 				String parsed = line.trim();
-				if (parsed.contains(BEGIN)) {
-					versions.push(currentVersion);
+				// TODO here is the logic for keeping or throwing away contents
+				if (parsed.contains(BEGIN_VERSION_ONLY)) {
+					versions.push(new Version(currentVersion.getVersionNumber(), ONLY_IN_THIS_VERSION));
 					currentVersion = parseVersion(parsed);
-				} else if (parsed.contains(END)) {
-					int endVersion = parseVersion(parsed);
-					if (currentVersion != endVersion) {
-						throw new IllegalArgumentException("Incorrect end-tag! expected " + currentVersion + " but was " + endVersion + ": " + name);
+				}
+				else if (parsed.contains(END_VERSION_ONLY)) {
+					Version endVersion = parseVersion(parsed);
+					if (!currentVersion.equals(endVersion)) {
+						throw new IllegalArgumentException("Incorrect end-tag! expected " + currentVersion
+								+ " but was " + endVersion + ": " + name);
 					}
 					currentVersion = versions.pop();
-				} else {
+				}
+				else if (parsed.contains(BEGIN_VERSION)) {
+					versions.push(currentVersion);
+					currentVersion = parseVersion(parsed);
+				}
+				else if (parsed.contains(END_VERSION)) {
+					Version endVersion = parseVersion(parsed);
+					if (!currentVersion.equals(endVersion)) {
+						throw new IllegalArgumentException("Incorrect end-tag! expected " + currentVersion
+								+ " but was " + endVersion + ": " + name);
+					}
+					currentVersion = versions.pop();
+				}
+				else {
 					contents.add(line, currentVersion);
 				}
 			}
 			return contents;
-		} finally {
+		}
+		finally {
 			IOUtil.close(reader);
 		}
 	}
 
-	protected int parseVersion(String string) {
-		if (string.contains(BEGIN)) {
-			return parseInt(string.substring(string.indexOf(BEGIN)+BEGIN.length()).trim());
-		} else {
-			return parseInt(string.substring(string.indexOf(END)+END.length()).trim());
+	protected Version parseVersion(String string) {
+		if (string.contains(BEGIN_VERSION_ONLY)) {
+			int version = parseInt(string.substring(string.indexOf(BEGIN_VERSION_ONLY) + BEGIN_VERSION_ONLY.length())
+					.trim());
+			return new Version(version, ONLY_IN_THIS_VERSION);
+		}
+		else if (string.contains(END_VERSION_ONLY)) {
+			int version = parseInt(string.substring(string.indexOf(END_VERSION_ONLY) + END_VERSION_ONLY.length())
+					.trim());
+			return new Version(version, ONLY_IN_THIS_VERSION);
+		}
+		else if (string.contains(BEGIN_VERSION)) {
+			int version = parseInt(string.substring(string.indexOf(BEGIN_VERSION) + BEGIN_VERSION.length()).trim());
+			return new Version(version);
+		}
+		else { // END_VERSION
+			int version = parseInt(string.substring(string.indexOf(END_VERSION) + END_VERSION.length()).trim());
+			return new Version(version);
 		}
 	}
 
@@ -100,7 +138,8 @@ public class LabCreator {
 		String value = beforeFirstWhiteSpace(string);
 		try {
 			return Integer.parseInt(value);
-		} catch (NumberFormatException e) {
+		}
+		catch (NumberFormatException e) {
 			Integer integer = constants.get(value);
 			if (integer == null) {
 				throw new IllegalArgumentException("Constant not defined: " + value);
@@ -110,13 +149,11 @@ public class LabCreator {
 	}
 
 	private String beforeFirstWhiteSpace(String string) {
-		for (int indx=0; indx<string.length(); indx++) {
+		for (int indx = 0; indx < string.length(); indx++) {
 			if (Character.isWhitespace(string.charAt(indx))) {
 				return string.substring(0, indx);
 			}
 		}
 		return string;
 	}
-
 }
-

@@ -23,7 +23,6 @@ import static org.junit.Assert.fail;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
-import java.nio.charset.Charset;
 
 import org.junit.Test;
 
@@ -63,16 +62,16 @@ public class LabCreatorTest {
 	public void nonJavaFilesShouldWork() throws IOException {
 		String name = "NonJavaFile.properties";
 		VersionedContents versionedContents = new LabCreator().labify(new InputStreamReader(LabCreatorTest.class.getClassLoader().getResourceAsStream(name)), name);
-		assertEquals(2, versionedContents.getMaxVersion());
-		assertEquals(0, versionedContents.getLeastVersion());
+		assertEquals(new Version(2), versionedContents.getMaxVersion());
+		assertEquals(new Version(0), versionedContents.getLeastVersion());
 	}
 	
 	@Test
 	public void normalLab() throws IOException {
 		String name = "Dummy.java.txt";
 		VersionedContents versionedContents = new LabCreator().labify(new InputStreamReader(LabCreatorTest.class.getClassLoader().getResourceAsStream(name)), name);
-		assertEquals(3, versionedContents.getMaxVersion());
-		assertEquals(1, versionedContents.getLeastVersion());
+		assertEquals(new Version(3), versionedContents.getMaxVersion());
+		assertEquals(new Version(1), versionedContents.getLeastVersion());
 	}
 	@Test
 	public void incorrectlyNestedTagsShouldGenerateException() throws IOException {
@@ -88,9 +87,25 @@ public class LabCreatorTest {
 	public void firstStepsMightBeEmpty() throws IOException {
 		String name = "StartingEmpty.java.txt";
 		VersionedContents versionedContents = new LabCreator().labify(new InputStreamReader(LabCreatorTest.class.getClassLoader().getResourceAsStream(name)), name);
-		assertEquals(3, versionedContents.getLeastVersion());
+		assertEquals(new Version(3), versionedContents.getLeastVersion());
 		assertFalse(versionedContents.hasContents(2));
 		assertTrue(versionedContents.hasContents(3));
-		assertEquals(7, versionedContents.getMaxVersion());
+		assertEquals(new Version(7), versionedContents.getMaxVersion());
+	}
+
+	@Test
+	public void correctContentsOfVersionThisOnly() throws IOException {
+		String name = "VersionTestThisOnly.txt";
+		VersionedContents versionedContents = new LabCreator().labify(new InputStreamReader(LabCreatorTest.class.getClassLoader().getResourceAsStream(name)), name);
+		checkCorrectContetsOfVersionThisOnly(versionedContents);
+	}
+
+	private void checkCorrectContetsOfVersionThisOnly(VersionedContents versionedContents) {
+		String contents1 = getContents(versionedContents, 1);
+		assertEquals("VERSION1" + newline, contents1);
+		String contents2 = getContents(versionedContents, 2);
+		assertEquals("VERSION2" + newline, contents2);
+		String contents3 = getContents(versionedContents, 3);
+		assertEquals("---" + newline + "VERSION2" + newline + "---" + newline, contents3);
 	}
 }

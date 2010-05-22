@@ -43,7 +43,7 @@ public class MaxLabStepMojo extends AbstractCreateLabMojo {
 
 	@Override
 	protected void process(File file, VersionedContents versionedContents) {
-		maxVersion = Math.max(maxVersion, versionedContents.getMaxVersion());
+		maxVersion = Math.max(maxVersion, versionedContents.getMaxVersion().getVersionNumber());
 	}
 
 	@Override

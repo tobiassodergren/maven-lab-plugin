@@ -29,57 +29,62 @@ import org.codehaus.plexus.util.IOUtil;
  * @author Jan Kronquist
  */
 public class VersionedContents {
-	private List<Row> rows = new ArrayList<Row>();
-	private int maxVersion = 0;
-	private int leastVersion = Integer.MAX_VALUE;
-
-	public boolean hasContents(int version) {
-		return version >= leastVersion;
+	private static class Row {
+		public Row(String line, Version version) {
+			this.contents = line;
+			this.version = version;
+		}
+	
+		String contents;
+	
+		Version version;
 	}
 
-	public void writeVersion(File dest, int version) throws IOException {
+	private List<Row> rows = new ArrayList<Row>();
+
+	private Version maxVersion = Version.ZERO;
+
+	private Version leastVersion = Version.VERY_BIG;
+
+	public boolean hasContents(int versionNumber) {
+		return leastVersion.sameOrLessThan(versionNumber);
+	}
+
+	public void writeVersion(File dest, int versionNumber) throws IOException {
 		Writer writer = new FileWriter(dest);
 		try {
-			writeVersion(writer, version);
-		} finally {
+			writeVersion(writer, versionNumber);
+		}
+		finally {
 			IOUtil.close(writer);
 		}
 	}
-	
-	public void writeVersion(Writer o, int version) {
+
+	public void writeVersion(Writer o, int versionNumber) {
 		PrintWriter out = new PrintWriter(o);
 		for (Row row : rows) {
-			if (row.version <= version) {
+			if (row.version.containsStuffFor(versionNumber)) {
 				out.println(row.contents);
 			}
 		}
 		out.flush();
 	}
 
-	public int getMaxVersion() {
+	public Version getMaxVersion() {
 		return maxVersion;
 	}
 
-	public int getLeastVersion() {
+	public Version getLeastVersion() {
 		return leastVersion;
 	}
 
-	public void add(String line, int currentVersion) {
+	public void add(String line, Version currentVersion) {
 		rows.add(new Row(line, currentVersion));
-		if (currentVersion > maxVersion) {
+		if (currentVersion.greaterThan(maxVersion)) {
 			maxVersion = currentVersion;
 		}
-		if (currentVersion < leastVersion) {
+		if (currentVersion.lessThan(leastVersion)) {
 			leastVersion = currentVersion;
 		}
 	}
-}
-
-class Row {
-	public Row(String line, int version) {
-		this.contents = line;
-		this.version = version; 
-	}
-	String contents;
-	int version;
 }

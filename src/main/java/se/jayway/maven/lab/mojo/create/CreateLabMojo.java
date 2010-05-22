@@ -49,11 +49,12 @@ public class CreateLabMojo extends AbstractCreateLabMojo {
 	
 	@Override
 	protected void process(File file, VersionedContents versionedContents) throws IOException {
-		if (versionedContents.getMaxVersion() == 0) {
+		// TODO move to isFirst() or something in Version
+		if (versionedContents.getMaxVersion().getVersionNumber() == 0) {
 			return;
 		}
 		boolean addedToIndex = false;
-		int maxStepToUse = (maxStep != 0) ? maxStep : versionedContents.getMaxVersion();
+		int maxStepToUse = (maxStep != 0) ? maxStep : versionedContents.getMaxVersion().getVersionNumber();
 		maxStepFound = Math.max(maxStepFound, maxStepToUse);
 		for (int step=0; step<=maxStepToUse; step++) {
 			if (versionedContents.hasContents(step)) {

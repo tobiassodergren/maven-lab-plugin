@@ -22,30 +22,30 @@ import org.junit.Test;
 public class ParseVersionTest {
 	@Test
 	public void basic() {
-		assertEquals(123, new LabCreator().parseVersion("@BEGIN_VERSION 123"));
+		assertEquals(new Version(123), new LabCreator().parseVersion("@BEGIN_VERSION 123"));
 	}
 	@Test
 	public void beginWithComment() {
-		assertEquals(1, new LabCreator().parseVersion("  @BEGIN_VERSION 1 2 3"));
+		assertEquals(new Version(1), new LabCreator().parseVersion("  @BEGIN_VERSION 1 2 3"));
 	}
 	@Test
 	public void tabBeforeVersion() {
-		assertEquals(1, new LabCreator().parseVersion("  @END_VERSION	1	2 3"));
+		assertEquals(new Version(1), new LabCreator().parseVersion("  @END_VERSION	1	2 3"));
 	}
 
 	@Test
 	public void severalSpacesBeforeVersion() {
-		assertEquals(9, new LabCreator().parseVersion(" 	 //@BEGIN_VERSION     9 hello"));
+		assertEquals(new Version(9), new LabCreator().parseVersion(" 	 //@BEGIN_VERSION     9 hello"));
 	}
 
 	@Test
 	public void constant() {
-		assertEquals(2, new LabCreator("a", "b", "c").parseVersion("//@BEGIN_VERSION  c"));
+		assertEquals(new Version(2), new LabCreator("a", "b", "c").parseVersion("//@BEGIN_VERSION  c"));
 	}
 
 	@Test
 	public void constantWithComment() {
-		assertEquals(1, new LabCreator("a", "b", "c").parseVersion("//@BEGIN_VERSION 	 b hello 23 "));
+		assertEquals(new Version(1), new LabCreator("a", "b", "c").parseVersion("//@BEGIN_VERSION 	 b hello 23 "));
 	}
 
 	@Test(expected=IllegalArgumentException.class)
@@ -57,4 +57,8 @@ public class ParseVersionTest {
 	public void noVersion() {
 		new LabCreator("a", "b", "c").parseVersion("//@BEND_VERSION");
 	}
+//	@Test
+//	public void basicVersionOnly() {
+//		assertEquals(123, new LabCreator().parseVersion("@BEGIN_VERSION_ONLY 123"));
+//	}
 }
