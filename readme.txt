@@ -3,7 +3,7 @@ mvn se.jayway.maven:maven-lab-plugin:1.0-SNAPSHOT:init
 
 Process:
 * Create lab code
-* Add version TAGS (@BEGIN_VERSION, @END_VERSION)
+* Add version TAGS (@BEGIN_VERSION, @END_VERSION, @BEGIN_VERSION_ONLY, @END_VERSION_ONLY)
 * Add maven-lab-plugin to the pom.xml
 * Start the lab "mvn lab:init". Lab is initialized at step 0
 * Run "mvn lab:next" to move to next step of the lab
