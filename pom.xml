@@ -40,8 +40,16 @@ limitations under the License.
 			<id>jan.kronquist</id>
 			<name>Jan Kronquist</name>
 			<organization>Jayway</organization>
-			<organizationUrl>http://www.jayway.se</organizationUrl>
-			<email>jan.kronquist at jayway.se</email>
+			<organizationUrl>http://www.jayway.com</organizationUrl>
+			<email>jan.kronquist at jayway.com</email>
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
+			<id>ulsa</id>
+			<name>Ulrik Sandberg</name>
+			<organization>Jayway</organization>
+			<organizationUrl>http://www.jayway.com</organizationUrl>
+			<email>ulrik.sandberg at jayway.com</email>
 			<timezone>+1</timezone>
 		</developer>
 	</developers>

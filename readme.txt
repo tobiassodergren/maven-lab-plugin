@@ -1,5 +1,30 @@
 mvn se.jayway.maven:maven-lab-plugin:1.0-SNAPSHOT:init
 
+Background:
+* Wrap code with @BEGIN_VERSION, @END_VERSION to have it shown in that step and all subsequent steps.
+* Wrap code with @BEGIN_VERSION_ONLY, @END_VERSION_ONLY to have it shown in that step only.
+* Example:
+  How do we achieve this?
+	Step 1:
+		function first() { }
+		first();
+	Step 2:
+		function first() { }
+		function second() { }
+		second();
+  By writing this:
+		@BEGIN_VERSION First
+		function first() { }
+		@END_VERSION First
+		@BEGIN_VERSION Second
+		function second() { }
+		@END_VERSION Second
+		@BEGIN_VERSION_ONLY First
+		first();
+		@END_VERSION_ONLY First
+		@BEGIN_VERSION_ONLY Second
+		second();
+		@END_VERSION_ONLY Second
 
 Process:
 * Create lab code
