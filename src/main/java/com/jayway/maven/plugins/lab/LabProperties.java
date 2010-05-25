@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package se.jayway.maven.lab;
+package com.jayway.maven.plugins.lab;
 
 import java.io.File;
 import java.io.FileReader;

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package se.jayway.maven.lab;
+package com.jayway.maven.plugins.lab;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -25,6 +25,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Test;
+
+import com.jayway.maven.plugins.lab.FileIndex;
 
 public class FileIndexTest {
 

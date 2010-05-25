@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package se.jayway.maven.lab.mojo.create;
+package com.jayway.maven.plugins.lab.mojo.create;
 
 import java.io.File;
 import java.io.IOException;

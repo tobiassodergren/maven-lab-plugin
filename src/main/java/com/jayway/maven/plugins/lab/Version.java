@@ -1,4 +1,4 @@
-package se.jayway.maven.lab;
+package com.jayway.maven.plugins.lab;
 
 /**
  * Contains not only the version number, but also a flag that indicates whether

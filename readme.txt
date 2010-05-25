@@ -1,4 +1,4 @@
-mvn se.jayway.maven:maven-lab-plugin:1.0-SNAPSHOT:init
+mvn com.jayway.maven.plugins.lab:maven-lab-plugin:1.0-SNAPSHOT:init
 
 Background:
 * Wrap code with @BEGIN_VERSION, @END_VERSION to have it shown in that step and all subsequent steps.
@@ -39,7 +39,7 @@ This should go into your pom.xml:
 <build>
         <plugins>
                 <plugin>
-                        <groupId>se.jayway.maven</groupId>
+                        <groupId>com.jayway.maven.plugins.lab</groupId>
                         <artifactId>maven-lab-plugin</artifactId>
                 </plugin>
         </plugins>

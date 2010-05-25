@@ -13,14 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package se.jayway.maven.lab.mojo.create;
+package com.jayway.maven.plugins.lab.mojo.create;
 
 import java.io.File;
 import java.io.IOException;
 
-import se.jayway.maven.lab.LabCreator;
-import se.jayway.maven.lab.LabRunner;
-import se.jayway.maven.lab.VersionedContents;
+import com.jayway.maven.plugins.lab.LabCreator;
+import com.jayway.maven.plugins.lab.LabRunner;
+import com.jayway.maven.plugins.lab.VersionedContents;
+
 
 /**
  * Goal to find the max version

@@ -13,28 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package se.jayway.maven.lab.mojo.run;
+package com.jayway.maven.plugins.lab.mojo.run;
 
-import se.jayway.maven.lab.LabRunner;
+import com.jayway.maven.plugins.lab.LabRunner;
 
 
 /**
- * Change version to versionNo
+ * Change to next step
  *
- * @goal setStep
+ * @goal next
  * @author Jan Kronquist
  */
-public class SetStepMojo extends AbstractRunLabMojo {
-
-	/**
-     * The version number to change to.
-     * @parameter expression="${labStep}"
-     * @required 
-     */
-    private int labStep;
+public class NextStepMojo extends AbstractRunLabMojo {
 
 	public int execute(LabRunner lab) {
-		return lab.changeTo(labStep);
+		return lab.nextStep();
 	}
 
 }

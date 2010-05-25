@@ -13,25 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package se.jayway.maven.lab.mojo.run;
+package com.jayway.maven.plugins.lab.mojo.create;
 
 import java.io.File;
+import java.io.IOException;
 
-import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.MojoFailureException;
+import com.jayway.maven.plugins.lab.LabRunner;
 
-import se.jayway.maven.lab.LabRunner;
 
-public abstract class AbstractRunLabMojo extends AbstractMojo {
-
-	/**
-	 * Location of the target directory.
-	 * @parameter expression="${project.build.directory}"
-	 * @required
-	 */
-	private File buildDirectory;
-
+/**
+ * Goal to create and initialize a lab.
+ *
+ * @goal init
+ * @author Jan Kronquist
+ */
+public class InitLabMojo extends CreateLabMojo {
 	/**
 	 * Root for the project.
 	 * @parameter expression="${basedir}"
@@ -39,11 +35,10 @@ public abstract class AbstractRunLabMojo extends AbstractMojo {
 	 */
 	private File targetDirectory;
 
-	public final void execute() throws MojoExecutionException, MojoFailureException {
-		int currentStep = execute(new LabRunner(buildDirectory, targetDirectory));
-		super.getLog().info("Current step is: " + currentStep);
+	@Override
+	protected void done() throws IOException {
+		super.done();
+		new LabRunner(buildDirectory, targetDirectory).changeTo(0);
 	}
-
-	protected abstract int execute(LabRunner lab);
 
 }
