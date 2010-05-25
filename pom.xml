@@ -191,10 +191,11 @@
 			<plugin>
 				<artifactId>maven-release-plugin</artifactId>
 				<configuration>
+					<mavenExecutorId>forked-path</mavenExecutorId>
 					<autoVersionSubmodules>true</autoVersionSubmodules>
 					<useReleaseProfile>false</useReleaseProfile>
 					<arguments>-Pofficial-release</arguments>
-					<goals>clean install plugin:report deploy</goals>
+					<goals>clean install</goals>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -237,9 +238,9 @@
 					-->
 					<plugin>
 						<artifactId>maven-gpg-plugin</artifactId>
-						<configuration>
-							<useAgent>true</useAgent>
-						</configuration>
+<!--						<configuration>-->
+<!--							<useAgent>true</useAgent>-->
+<!--						</configuration>-->
 						<executions>
 							<execution>
 								<id>sign-artifacts</id>
