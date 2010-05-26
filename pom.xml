@@ -238,9 +238,9 @@
 					-->
 					<plugin>
 						<artifactId>maven-gpg-plugin</artifactId>
-<!--						<configuration>-->
-<!--							<useAgent>true</useAgent>-->
-<!--						</configuration>-->
+						<configuration>
+							<useAgent>true</useAgent>
+						</configuration>
 						<executions>
 							<execution>
 								<id>sign-artifacts</id>
