@@ -18,6 +18,9 @@ package com.jayway.maven.plugins.lab.mojo.create;
 import java.io.File;
 import java.io.IOException;
 
+import org.codehaus.plexus.util.FileUtils;
+import org.codehaus.plexus.util.IOUtil;
+
 import com.jayway.maven.plugins.lab.FileIndex;
 import com.jayway.maven.plugins.lab.FileUtil;
 import com.jayway.maven.plugins.lab.LabCreator;
@@ -57,11 +60,12 @@ public class CreateLabMojo extends AbstractCreateLabMojo {
 		boolean addedToIndex = false;
 		int maxStepToUse = (maxStep != 0) ? maxStep : versionedContents.getMaxVersion().getVersionNumber();
 		maxStepFound = Math.max(maxStepFound, maxStepToUse);
+		String relativePath = FileUtil.relativePathFromBase(file, getProject().getBasedir());
+		File backupFile = makeDestinationFile(relativePath, "original");
+		FileUtils.copyFile(file, backupFile);
 		for (int step=0; step<=maxStepToUse; step++) {
 			if (versionedContents.hasContents(step)) {
-				String relativePath = FileUtil.relativePathFromBase(file, getProject().getBasedir());
-				File versionRoot = new File(getOutputDirectory(), "" + step);
-				File dest = FileUtil.makeDestination(relativePath, versionRoot);
+				File dest = makeDestinationFile(relativePath, "" + step);
 				versionedContents.writeVersion(dest, step);
 				if (addedToIndex == false) {
 					addedToIndex = true;
@@ -69,6 +73,12 @@ public class CreateLabMojo extends AbstractCreateLabMojo {
 				}
 			}
 		}
+	}
+
+	private File makeDestinationFile(String relativePath, String folder) {
+		File versionRoot = new File(getOutputDirectory(), folder);
+		File dest = FileUtil.makeDestination(relativePath, versionRoot);
+		return dest;
 	}
 
 	@Override

@@ -16,8 +16,8 @@
 package com.jayway.maven.plugins.lab;
 
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -32,7 +32,7 @@ public class LabProperties {
 	public static LabProperties load(File directory) {
 		Properties properties = new Properties();
 		try {
-			properties.load(new FileReader(getFile(directory)));
+			properties.load(new FileInputStream(getFile(directory)));
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
@@ -47,7 +47,7 @@ public class LabProperties {
 		outputDirectory.mkdirs();
 		Properties properties = new Properties();
 		properties.setProperty(MAX_STEP, "" + maxStep);
-		properties.store(new FileWriter(getFile(outputDirectory)), null);
+		properties.store(new FileOutputStream(getFile(outputDirectory)), null);
 	}
 
 	private static File getFile(File outputDirectory) {

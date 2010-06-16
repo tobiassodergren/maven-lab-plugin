@@ -18,7 +18,7 @@
 	<packaging>maven-plugin</packaging>
 	<version>1.0.0.RELEASE-SNAPSHOT</version>
 	<name>maven-lab-plugin Maven Mojo</name>
-	<url>http://maven.apache.org</url>
+	<url>http://github.com/jayway/maven-lab-plugin</url>
 	<description>
         Maven plugin used to create labs that provide more code once a step has been completed.
         Labs are a useful way to learn new technologies, frameworks and tools.
