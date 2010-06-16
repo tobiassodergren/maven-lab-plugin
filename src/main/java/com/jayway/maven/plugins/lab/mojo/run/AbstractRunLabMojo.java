@@ -15,33 +15,18 @@
  */
 package com.jayway.maven.plugins.lab.mojo.run;
 
-import java.io.File;
-
-import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
 import com.jayway.maven.plugins.lab.LabRunner;
+import com.jayway.maven.plugins.lab.mojo.AbstractLabMojo;
 
 
-public abstract class AbstractRunLabMojo extends AbstractMojo {
-
-	/**
-	 * Location of the target directory.
-	 * @parameter expression="${project.build.directory}"
-	 * @required
-	 */
-	private File buildDirectory;
-
-	/**
-	 * Root for the project.
-	 * @parameter expression="${basedir}"
-	 * @required
-	 */
-	private File targetDirectory;
+public abstract class AbstractRunLabMojo extends AbstractLabMojo {
 
 	public final void execute() throws MojoExecutionException, MojoFailureException {
-		int currentStep = execute(new LabRunner(buildDirectory, targetDirectory));
+		assertLabInitialized();
+		int currentStep = execute(createLabRunner());
 		super.getLog().info("Current step is: " + currentStep);
 	}
 

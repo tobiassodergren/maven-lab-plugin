@@ -19,13 +19,11 @@ import java.io.File;
 import java.io.IOException;
 
 import org.codehaus.plexus.util.FileUtils;
-import org.codehaus.plexus.util.IOUtil;
 
 import com.jayway.maven.plugins.lab.FileIndex;
 import com.jayway.maven.plugins.lab.FileUtil;
 import com.jayway.maven.plugins.lab.LabCreator;
 import com.jayway.maven.plugins.lab.LabProperties;
-import com.jayway.maven.plugins.lab.LabRunner;
 import com.jayway.maven.plugins.lab.VersionedContents;
 
 
@@ -61,7 +59,7 @@ public class CreateLabMojo extends AbstractCreateLabMojo {
 		int maxStepToUse = (maxStep != 0) ? maxStep : versionedContents.getMaxVersion().getVersionNumber();
 		maxStepFound = Math.max(maxStepFound, maxStepToUse);
 		String relativePath = FileUtil.relativePathFromBase(file, getProject().getBasedir());
-		File backupFile = makeDestinationFile(relativePath, "original");
+		File backupFile = makeDestinationFile(relativePath, ORIGINAL);
 		FileUtils.copyFile(file, backupFile);
 		for (int step=0; step<=maxStepToUse; step++) {
 			if (versionedContents.hasContents(step)) {
@@ -76,14 +74,9 @@ public class CreateLabMojo extends AbstractCreateLabMojo {
 	}
 
 	private File makeDestinationFile(String relativePath, String folder) {
-		File versionRoot = new File(getOutputDirectory(), folder);
+		File versionRoot = new File(getLabStorageDirectory(), folder);
 		File dest = FileUtil.makeDestination(relativePath, versionRoot);
 		return dest;
-	}
-
-	@Override
-	protected String getOutputDirectoryName() {
-		return LabRunner.LAB_DIRECTORY;
 	}
 
 	@Override
@@ -91,8 +84,8 @@ public class CreateLabMojo extends AbstractCreateLabMojo {
 		if (maxStepFound == 0) {
 			throw new IllegalStateException("No steps found");
 		}
-		fileIndex.save(new File(getOutputDirectory(), FileIndex.INDEX_FILE_NAME));
-		new LabProperties(maxStepFound).save(getOutputDirectory());
+		fileIndex.save(new File(getLabStorageDirectory(), FileIndex.INDEX_FILE_NAME));
+		new LabProperties(maxStepFound).save(getLabStorageDirectory());
 	}
 }
 

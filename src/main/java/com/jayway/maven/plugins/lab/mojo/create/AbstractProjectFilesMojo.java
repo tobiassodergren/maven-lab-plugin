@@ -18,17 +18,17 @@ package com.jayway.maven.plugins.lab.mojo.create;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.DirectoryScanner;
-import org.codehaus.plexus.util.FileUtils;
+
+import com.jayway.maven.plugins.lab.mojo.AbstractLabMojo;
 
 /**
  * 
  * @author Jan Kronquist
  */
-public abstract class AbstractProjectFilesMojo extends AbstractMojo {
+public abstract class AbstractProjectFilesMojo extends AbstractLabMojo {
 
 	/**
 	 * @parameter expression="${project}"
@@ -37,13 +37,6 @@ public abstract class AbstractProjectFilesMojo extends AbstractMojo {
 	 */
 	private MavenProject project;
 
-	/**
-	 * Location of the file.
-	 * @parameter expression="${project.build.directory}"
-	 * @required
-	 */
-	protected File buildDirectory;
-	
     /**
      * List of files to include. Specified as fileset patterns.
      *
@@ -59,15 +52,11 @@ public abstract class AbstractProjectFilesMojo extends AbstractMojo {
     private String[] excludes = new String[] {"**/target/**", "**/.*/**"};
 
 	private boolean skipHiddenFiles = true;
-
-	private File outputDirectory;
+	
+	private boolean overwrite = false;
 
 	public MavenProject getProject() {
 		return project;
-	}
-
-	public File getOutputDirectory() {
-		return outputDirectory;
 	}
 
 	public final void execute() throws MojoExecutionException {
@@ -75,15 +64,14 @@ public abstract class AbstractProjectFilesMojo extends AbstractMojo {
 			return;
 		}
 		
-		this.outputDirectory = new File(buildDirectory, getOutputDirectoryName());
-		if (outputDirectory.exists()) {
-			try {
-				FileUtils.deleteDirectory(outputDirectory);
-			} catch (IOException e) {
-				throw new MojoExecutionException("Failed to delete outputdirectory", e);
+		if (getLabStorageDirectory().exists()) {
+			if (!overwrite) {
+				super.getLog().error("Lab already initialized: " + getLabStorageDirectory());
+				return;
+			} else {
+				deleteLabStorage();
 			}
 		}
-		outputDirectory.mkdirs();
 		
 		DirectoryScanner scanner = new DirectoryScanner();
 		scanner.setBasedir(project.getBasedir());
@@ -108,7 +96,6 @@ public abstract class AbstractProjectFilesMojo extends AbstractMojo {
 		}
 	}
 
-	protected abstract String getOutputDirectoryName();
 	protected abstract void process(File file) throws IOException;
 	protected abstract void init();
 	protected abstract void done() throws IOException;

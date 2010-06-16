@@ -15,10 +15,7 @@
  */
 package com.jayway.maven.plugins.lab.mojo.create;
 
-import java.io.File;
 import java.io.IOException;
-
-import com.jayway.maven.plugins.lab.LabRunner;
 
 
 /**
@@ -28,17 +25,10 @@ import com.jayway.maven.plugins.lab.LabRunner;
  * @author Jan Kronquist
  */
 public class InitLabMojo extends CreateLabMojo {
-	/**
-	 * Root for the project.
-	 * @parameter expression="${basedir}"
-	 * @required
-	 */
-	private File targetDirectory;
-
 	@Override
 	protected void done() throws IOException {
 		super.done();
-		new LabRunner(buildDirectory, targetDirectory).changeTo(0);
+		createLabRunner().changeTo(0);
 	}
 
 }

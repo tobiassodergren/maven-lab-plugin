@@ -1,30 +1,25 @@
-mvn com.jayway.maven.plugins.lab:maven-lab-plugin:1.0-SNAPSHOT:init
+This is a Maven plugin used to create stepwise labs which a developer can use 
+to learn new technologies, frameworks and tools.
 
-Background:
-* Wrap code with @BEGIN_VERSION, @END_VERSION to have it shown in that step and all subsequent steps.
-* Wrap code with @BEGIN_VERSION_ONLY, @END_VERSION_ONLY to have it shown in that step only.
-* Example:
-  How do we achieve this?
-	Step 1:
-		function first() { }
-		first();
-	Step 2:
-		function first() { }
-		function second() { }
-		second();
-  By writing this:
-		@BEGIN_VERSION First
-		function first() { }
-		@END_VERSION First
-		@BEGIN_VERSION Second
-		function second() { }
-		@END_VERSION Second
-		@BEGIN_VERSION_ONLY First
-		first();
-		@END_VERSION_ONLY First
-		@BEGIN_VERSION_ONLY Second
-		second();
-		@END_VERSION_ONLY Second
+For example a test driven lab can easily be created by letting each step of lab
+add new test cases, either new classes or simply new methods. The student can 
+then modify the main code until the test passes and then move to the next step 
+of the lab. 
+
+Commands:
+* "mvn lab:init" initializes the lab at step 0
+* "mvn lab:next" moves to the next step of the lab
+* "mvn lab:currentStep" shows the current step
+* "mvn lab:reset" restores all files that were affected by the lab
+* "mvn lab:setStep -DlabStep=nnn" to change to a particular step of the lab
+
+Tags to add code in steps:
+* "@BEGIN_VERSION <stepNo>" start a block of code that belongs to a step 
+* "@END_VERSION <stepNo>" end a block of code that belongs to a step
+
+Tags to add code that will only appear in a particular step:
+* "@BEGIN_VERSION_ONLY <stepNo>" start a block of code that belongs to a step 
+* "@END_VERSION_ONLY <stepNo>" end a block of code that belongs to a step
 
 Process:
 * Create lab code
@@ -47,6 +42,28 @@ This should go into your pom.xml:
 
 ---
 
-Exceptions:
-* Run "mvn lab:setStep -DlabStep=nnn" to change to a particular step of the lab
-* Run "mvn lab:currentStep" to display the current step of the lab
+Example:
+  How do we achieve a lab of two steps?
+	Step 1:
+		function first() { }
+		first();
+	Step 2:
+		function first() { }
+		function second() { }
+		second();
+				
+  Solution:
+		@BEGIN_VERSION First
+		function first() { }
+		@END_VERSION First
+		@BEGIN_VERSION Second
+		function second() { }
+		@END_VERSION Second
+		@BEGIN_VERSION_ONLY First
+		first();
+		@END_VERSION_ONLY First
+		@BEGIN_VERSION_ONLY Second
+		second();
+		@END_VERSION_ONLY Second
+
+

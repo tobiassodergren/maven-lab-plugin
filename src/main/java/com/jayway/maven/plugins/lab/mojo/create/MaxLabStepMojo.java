@@ -19,7 +19,6 @@ import java.io.File;
 import java.io.IOException;
 
 import com.jayway.maven.plugins.lab.LabCreator;
-import com.jayway.maven.plugins.lab.LabRunner;
 import com.jayway.maven.plugins.lab.VersionedContents;
 
 
@@ -32,11 +31,6 @@ import com.jayway.maven.plugins.lab.VersionedContents;
 public class MaxLabStepMojo extends AbstractCreateLabMojo {
 	
 	private int maxVersion = 0;
-
-	@Override
-	protected String getOutputDirectoryName() {
-		return LabRunner.LAB_DIRECTORY;
-	}
 
 	@Override
 	protected void init(LabCreator labCreator) {
