@@ -21,6 +21,14 @@ Tags to add code that will only appear in a particular step:
 * "@BEGIN_VERSION_ONLY <stepNo>" start a block of code that belongs to a step 
 * "@END_VERSION_ONLY <stepNo>" end a block of code that belongs to a step
 
+Notice that the entire line containing a tag will be removed from the output!
+The purpose of this is to support tags regardless of the file format, eg java,
+properties or xml.
+
+The stepNo can either be a number or a constant. When using constants they
+must be specified in a file called "labStepConstants.properties" placed in
+the root of the project. The line number of the constant is used as stepNo. 
+
 Process:
 * Create lab code
 * Add version TAGS (@BEGIN_VERSION, @END_VERSION, @BEGIN_VERSION_ONLY, @END_VERSION_ONLY)
@@ -53,17 +61,18 @@ Example:
 		second();
 				
   Solution:
-		@BEGIN_VERSION First
+		// @BEGIN_VERSION First
 		function first() { }
-		@END_VERSION First
-		@BEGIN_VERSION Second
+		// @END_VERSION First
+		// @BEGIN_VERSION Second
 		function second() { }
-		@END_VERSION Second
-		@BEGIN_VERSION_ONLY First
+		// @END_VERSION Second
+		// @BEGIN_VERSION_ONLY First
 		first();
-		@END_VERSION_ONLY First
-		@BEGIN_VERSION_ONLY Second
+		// @END_VERSION_ONLY First
+		// @BEGIN_VERSION_ONLY Second
 		second();
-		@END_VERSION_ONLY Second
+		/* @END_VERSION_ONLY Second */
 
-
+Notice that it doesn't matter what type of comment style we use and that the
+entire line containing the tag is removed.
