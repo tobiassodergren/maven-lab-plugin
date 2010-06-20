@@ -66,9 +66,9 @@
 		</repository>
 		<snapshotRepository>
 			<uniqueVersion>true</uniqueVersion>
-			<id>jayway-snapshot-repo</id>
-			<name>Jayway Public Snapshot Repository</name>
-			<url>http://waybuild.gotdns.com/nexus/content/repositories/snapshots/</url>
+			<id>oss.sonatype.org-jayway-snapshots</id>
+			<name>OpenSource Snapshots on Sonatype.org</name>
+			<url>https://oss.sonatype.org/content/repositories/jayway-snapshots/</url>
 			<layout>default</layout>
 		</snapshotRepository>
 		<site>
@@ -194,7 +194,7 @@
 					<autoVersionSubmodules>true</autoVersionSubmodules>
 					<useReleaseProfile>false</useReleaseProfile>
 					<arguments>-Pofficial-release</arguments>
-					<goals>clean install</goals>
+					<goals>deploy site-deploy</goals>
 				</configuration>
 			</plugin>
 			<plugin>
