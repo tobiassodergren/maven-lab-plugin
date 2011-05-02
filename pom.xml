@@ -16,7 +16,7 @@
 	<groupId>com.jayway.maven.plugins.lab</groupId>
 	<artifactId>maven-lab-plugin</artifactId>
 	<packaging>maven-plugin</packaging>
-	<version>1.0.0.RELEASE-SNAPSHOT</version>
+	<version>1.0.0.RELEASE</version>
 	<name>maven-lab-plugin Maven Mojo</name>
 	<url>http://github.com/jayway/maven-lab-plugin</url>
 	<description>
