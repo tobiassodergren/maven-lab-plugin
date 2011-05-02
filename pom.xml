@@ -101,6 +101,10 @@
 		<pluginManagement>
 			<plugins>
 				<plugin>
+					<artifactId>maven-project-info-reports-plugin</artifactId>
+					<version>2.2</version>
+				</plugin>
+				<plugin>
 					<artifactId>maven-antrun-plugin</artifactId>
 					<version>1.6</version>
 				</plugin>
@@ -201,7 +205,7 @@
 					<autoVersionSubmodules>true</autoVersionSubmodules>
 					<useReleaseProfile>false</useReleaseProfile>
 					<arguments>-Pofficial-release</arguments>
-					<goals>deploy site-deploy</goals>
+					<goals>deploy</goals>
 				</configuration>
 			</plugin>
 			<plugin>
