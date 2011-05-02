@@ -37,17 +37,17 @@ public class LabCreatorTest {
 	public void correctContentsOfVersion() throws IOException {
 		String name = "VersionTest.txt";
 		VersionedContents versionedContents = new LabCreator().labify(new InputStreamReader(LabCreatorTest.class.getClassLoader().getResourceAsStream(name)), name);
-		checkCorrectContetsOfVersion(versionedContents);
+		checkCorrectContentsOfVersion(versionedContents);
 	}
 
 	@Test
-	public void correctContentsOfVersionWithConstans() throws IOException {
+	public void correctContentsOfVersionWithConstants() throws IOException {
 		String name = "VersionTestWithConstants.txt";
-		VersionedContents versionedContents = new LabCreator("noll", "ETT", "TVÅ", "tre").labify(new InputStreamReader(LabCreatorTest.class.getClassLoader().getResourceAsStream(name)), name);
-		checkCorrectContetsOfVersion(versionedContents);
+		VersionedContents versionedContents = new LabCreator("noll", "ETT", "TV√Ö", "tre").labify(new InputStreamReader(LabCreatorTest.class.getClassLoader().getResourceAsStream(name)), name);
+		checkCorrectContentsOfVersion(versionedContents);
 	}
 
-	private void checkCorrectContetsOfVersion(VersionedContents versionedContents) {
+	private void checkCorrectContentsOfVersion(VersionedContents versionedContents) {
 		String contents1 = getContents(versionedContents, 1);
 		assertEquals("VERSION1" + newline, contents1);
 		String contents2 = getContents(versionedContents, 2);

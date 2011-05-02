@@ -4,9 +4,9 @@
 //@BEGIN_VERSION ETT
 VERSION1
             #@END_VERSION ETT           
-//@BEGIN_VERSION TVÅ   the spex version
+//@BEGIN_VERSION TV√Ö   the spex version
 VERSION2
-----------------//@END_VERSION TVÅ	tjolahopp
+----------------//@END_VERSION TV√Ö	tjolahopp
 //@BEGIN_VERSION tre              
 ---
 //@END_VERSION tre
