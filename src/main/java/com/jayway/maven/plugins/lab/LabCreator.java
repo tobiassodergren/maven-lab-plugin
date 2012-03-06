@@ -34,8 +34,6 @@ import org.codehaus.plexus.util.IOUtil;
  */
 public class LabCreator {
 
-	private static final boolean ONLY_IN_THIS_VERSION = true;
-
 	private static final String BEGIN_VERSION_ONLY = "@BEGIN_VERSION_ONLY";
 
 	private static final String END_VERSION_ONLY = "@END_VERSION_ONLY";
@@ -43,6 +41,10 @@ public class LabCreator {
 	private static final String BEGIN_VERSION = "@BEGIN_VERSION";
 
 	private static final String END_VERSION = "@END_VERSION";
+
+	private static final String BEGIN_UP_TO_VERSION = "@BEGIN_UP_TO_VERSION";
+
+	private static final String END_UP_TO_VERSION = "@END_UP_TO_VERSION";
 
 	private Map<String, Integer> constants;
 
@@ -89,6 +91,18 @@ public class LabCreator {
 					}
 					currentVersion = versions.pop();
 				}
+				else if (parsed.contains(BEGIN_UP_TO_VERSION)) {
+					versions.push(currentVersion);
+					currentVersion = parseVersion(parsed);
+				}
+				else if (parsed.contains(END_UP_TO_VERSION)) {
+					Version endVersion = parseVersion(parsed);
+					if (!currentVersion.equals(endVersion)) {
+						throw new IllegalArgumentException("Incorrect end-tag! expected " + currentVersion
+								+ " but was " + endVersion + ": " + name);
+					}
+					currentVersion = versions.pop();
+				}
 				else if (parsed.contains(BEGIN_VERSION)) {
 					versions.push(currentVersion);
 					currentVersion = parseVersion(parsed);
@@ -116,12 +130,22 @@ public class LabCreator {
 		if (string.contains(BEGIN_VERSION_ONLY)) {
 			int version = parseInt(string.substring(string.indexOf(BEGIN_VERSION_ONLY) + BEGIN_VERSION_ONLY.length())
 					.trim());
-			return new Version(version, ONLY_IN_THIS_VERSION);
+			return new Version(version, Version.TriggerType.CONTENT_IN_THIS_VERSION_ONLY);
 		}
 		else if (string.contains(END_VERSION_ONLY)) {
 			int version = parseInt(string.substring(string.indexOf(END_VERSION_ONLY) + END_VERSION_ONLY.length())
 					.trim());
-			return new Version(version, ONLY_IN_THIS_VERSION);
+			return new Version(version, Version.TriggerType.CONTENT_IN_THIS_VERSION_ONLY);
+		}
+		else if (string.contains(BEGIN_UP_TO_VERSION)) {
+			int version = parseInt(string.substring(string.indexOf(BEGIN_UP_TO_VERSION) + BEGIN_UP_TO_VERSION.length())
+					.trim());
+			return new Version(version, Version.TriggerType.UP_TO_VERSION);
+		}
+		else if (string.contains(END_UP_TO_VERSION)) {
+			int version = parseInt(string.substring(string.indexOf(END_UP_TO_VERSION) + END_UP_TO_VERSION.length())
+					.trim());
+			return new Version(version, Version.TriggerType.UP_TO_VERSION);
 		}
 		else if (string.contains(BEGIN_VERSION)) {
 			int version = parseInt(string.substring(string.indexOf(BEGIN_VERSION) + BEGIN_VERSION.length()).trim());
