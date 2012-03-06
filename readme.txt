@@ -14,12 +14,16 @@ Commands:
 * "mvn lab:setStep -DlabStep=nnn" to change to a particular step of the lab
 
 Tags to add code in steps:
-* "@BEGIN_VERSION <stepNo>" start a block of code that belongs to a step 
-* "@END_VERSION <stepNo>" end a block of code that belongs to a step
+* "@BEGIN_VERSION <stepNo>" start a block of code that will start to be included in the step and onwards
+* "@END_VERSION <stepNo>" end the block of code
 
 Tags to add code that will only appear in a particular step:
 * "@BEGIN_VERSION_ONLY <stepNo>" start a block of code that belongs to a step 
 * "@END_VERSION_ONLY <stepNo>" end a block of code that belongs to a step
+
+Tags to add code up to a specified version:
+* "@BEGIN_UP_TO_VERSION" start a block of code that will be included up to (but not including) a version
+* "@END_UP_TO_VERSION" end the block of code
 
 Notice that the entire line containing a tag will be removed from the output!
 The purpose of this is to support tags regardless of the file format, eg java,
@@ -31,7 +35,8 @@ the root of the project. The line number of the constant is used as stepNo.
 
 Process:
 * Create lab code
-* Add version TAGS (@BEGIN_VERSION, @END_VERSION, @BEGIN_VERSION_ONLY, @END_VERSION_ONLY)
+* Add version TAGS (@BEGIN_VERSION, @END_VERSION, @BEGIN_VERSION_ONLY, @END_VERSION_ONLY,
+                    @BEGIN_UP_TO_VERSION, @END_UP_TO_VERSION)
 * Add maven-lab-plugin to the pom.xml
 * Start the lab "mvn lab:init". Lab is initialized at step 0
 * Run "mvn lab:next" to move to next step of the lab
