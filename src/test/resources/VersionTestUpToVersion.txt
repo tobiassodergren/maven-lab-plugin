@@ -1,0 +1,18 @@
+//@BEGIN_VERSION 3
+---
+     //@END_VERSION 3
+//@BEGIN_UP_TO_VERSION 3 -- utilizing stack
+@Ignore
+            #@END_UP_TO_VERSION 3
+//@BEGIN_VERSION 4
+@Ignore
+//@END_VERSION 4
+//@BEGIN_VERSION 2   the spex version
+VERSION2
+----------------//@END_VERSION 2	tjolahopp
+//@BEGIN_VERSION 3              
+---
+//@END_VERSION 3
+@BEGIN_VERSION 1
+VERSION1 that should be left
+@END_VERSION 1           
